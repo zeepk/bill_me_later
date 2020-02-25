@@ -41,16 +41,35 @@ class Article extends Component {
 		// }
 		const today = Date();
 		let events = [];
-		function MonthlyEvent(name, start) {
-			(this.name = name), (this.start_date = start), (this.dates = []);
+		class MonthlyEvent {
+			constructor(name, start) {
+				this.name = name;
+				this.dates = [];
+				let initial_date = new Date();
+				initial_date.setDate(start);
+				this.dates.push(initial_date);
+				for (let i = 1; i < 10; i++) {
+					initial_date = new Date();
+					initial_date.setDate(start);
+					initial_date.setMonth((initial_date.getMonth() + i) % 12);
+					this.dates.push(initial_date);
+				}
+			}
+		}
 
-			let pay_date = Date();
-			pay_date.setDate(start);
-			this.dates.push(pay_date);
-			for (let i = 0; i < 10; i++) {
-				pay_date.setMonth(i % 11);
-				this.dates.push(pay_date);
-				console.log(pay_date);
+		class WeeklyEvent {
+			constructor(name, start) {
+				this.name = name;
+				this.dates = [];
+				let initial_date = new Date();
+				initial_date.setDate(start);
+				this.dates.push(initial_date);
+				for (let i = 1; i < 10; i++) {
+					initial_date = new Date();
+					initial_date.setDate(start);
+					initial_date.setDate(initial_date.getMonth() + 7 * i);
+					this.dates.push(initial_date);
+				}
 			}
 		}
 		const weekly_event = {
@@ -61,37 +80,44 @@ class Article extends Component {
 				for (let i = 0; i < 10; i++) {
 					pay_date.setDate(pay_date.getDate + 7);
 					this.dates.push(pay_date);
-					console.log(pay_date);
 				}
+				console.log(pay_date);
 			},
 			name: 'monthly event',
 			start_date: 0,
 			dates: []
 		};
 		const create_event = (name, type, start) => {
-			if ((type = 'monthly')) {
+			if (type == 'monthly') {
 				const event = new MonthlyEvent(name, start);
-				event.name = name;
 				return event;
-			} else if ((type = 'weekly')) {
-				const event = weekly_event(start);
-				event.name = name;
+			} else if (type == 'weekly') {
+				const event = new WeeklyEvent(name, start);
 				return event;
 			} else {
 				alert('Not a valid event type.');
 			}
 		};
 
+		function DateList(props) {
+			const event = props.event;
+			const dates = event.dates.map(date => (
+				<li key={date.toString()}>{date.toString()}</li>
+			));
+			return <ul>{dates}</ul>;
+		}
 		const gym = create_event('Club Sport', 'monthly', 5);
+		const stocks = create_event('Stocks', 'weekly', 1);
+		console.log(gym.dates[4].getMonth());
 
 		return (
 			<div>
 				{/* <h3>{this.state.data[0].title}</h3>
 				<p>{this.state.data[0].created_at}</p>
 				<p>{this.state.data[0].message}</p> */}
-				<h3>{gym.name}</h3>
-				<h3>{gym.start_date}</h3>
-				<h3>{gym.dates[0]}</h3>
+				<h3>{stocks.name}</h3>
+				<h3>{stocks.start_date}</h3>
+				<DateList event={stocks} />
 			</div>
 		);
 	}
