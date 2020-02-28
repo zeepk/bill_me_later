@@ -1,11 +1,11 @@
-from myapp.models import (Article)
+from myapp.models import (Event)
 from rest_framework import viewsets, permissions
-from .serializers import (ArticleSerializer)
+from .serializers import (EventSerializer)
 
 
-class ArticleViewSet(viewsets.ModelViewSet):
-    queryset = Article.objects.all()
+class EventViewSet(viewsets.ModelViewSet):
+    queryset = Event.objects.all()
     permission_classes = [
         permissions.AllowAny
     ]
-    serializer_class = ArticleSerializer
+    serializer_class = EventSerializer

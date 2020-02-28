@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from myapp.models import (Article)
+from myapp.models import (Event)
 
 
-class ArticleSerializer(serializers.ModelSerializer):
+class EventSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Article
+        model = Event
         fields = '__all__'

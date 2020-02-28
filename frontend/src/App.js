@@ -1,16 +1,14 @@
-import React from 'react';
-import './App.css';
-import Article from './components/Article';
+import React from "react";
+import "./App.css";
+import EventList from "./components/EventList";
 
 function App() {
-	return (
-		<div className="App">
-			<header className="App-header">
-				<p>A React Django App</p>
-				<Article />
-			</header>
-		</div>
-	);
+  return (
+    <div className="App">
+      <h1>A React Django App</h1>
+      <EventList />
+    </div>
+  );
 }
 
 export default App;
